@@ -1,0 +1,16 @@
+#server.port=9090
+
+# Configuração para o primeiro banco de dados
+spring.datasource.primary.jdbc-url=
+spring.datasource.primary.username=
+spring.datasource.primary.password=
+spring.datasource.primary.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+# Configuração para o segundo banco de dados
+spring.datasource.secondary.jdbc-url=
+spring.datasource.secondary.username=
+spring.datasource.secondary.password=
+spring.datasource.secondary.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+#Swegger
+spring.mvc.pathmatch.matching-strategy=ant_path_matcher
