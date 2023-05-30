@@ -1,13 +1,15 @@
 package com.natusfarma.pc.itecvstotvs;
 
-import com.natusfarma.pc.itecvstotvs.componente.CompararDados;
-import com.natusfarma.pc.itecvstotvs.componente.primario.DatabasePrimario;
-import com.natusfarma.pc.itecvstotvs.componente.primario.DatabasePrimarioFilial;
+
+import com.natusfarma.pc.itecvstotvs.componente.MapClass;
+import com.natusfarma.pc.itecvstotvs.service.MenuService;
+import com.natusfarma.pc.itecvstotvs.service.NotaFiscalSaidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.File;
 import java.time.LocalDate;
 
 
@@ -15,13 +17,8 @@ import java.time.LocalDate;
 public class ItecvstotvsApplication implements CommandLineRunner {
 
 	@Autowired
-	private CompararDados compararDados;
+	private MenuService menuService;
 
-	@Autowired
-	private DatabasePrimarioFilial filiais;
-
-	@Autowired
-	private DatabasePrimario databasePrimario;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ItecvstotvsApplication.class, args);
@@ -30,15 +27,27 @@ public class ItecvstotvsApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		//periodo de vencimento.
-		LocalDate dataInicial = LocalDate.of(2023, 04, 14);
-		LocalDate dataFinal = LocalDate.of(2023, 04, 17);
+		LocalDate dataInicial = LocalDate.of(2023, 05, 18);
+		LocalDate dataFinal = LocalDate.of(2023, 05, 18);
+		File file = new File("C:\\Unidade\\foto\\comparativo"+dataInicial+".csv");
+
+//		processar para impressão no console
 //		compararDados.processar(dataInicial,dataFinal);
+//		System.out.println(compararDados.cabecalhoTipo());
 //		compararDados.imprimirListas();
-//		File file = new File("C:\\Unidade\\foto\\comparativo"+dataInicial+".csv");
-//		compararDados.gerarArquivoCsv(file);
 
-//		filiais.imprimirListas(filiais.processar());
+		String[] ids = {"2","3","4","5","6"};
+//		compararDadosClientesService.processarPorIds(ids);
+//		compararDadosClientesService.imprimirListas();
 
-		databasePrimario.processarPorFilial(5,dataInicial,dataFinal);
+//		compararDadosProdutoService.processarPorIds(ids);
+//		compararDadosProdutoService.imprimirListas();
+
+		System.out.println("------------------------------");
+
+		//menuService.grupos("com.natusfarma.pc.itecvstotvs.controller.financeiro");
+
+		System.out.println("------------------------------");
+
 	}
 }

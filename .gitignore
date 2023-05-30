@@ -34,3 +34,7 @@ build/
 
 #####Arquivo de banco de dados####
 /src/main/resources/application.properties
+
+####remover os arquivos compilados####
+/out/*.*
+/out/*

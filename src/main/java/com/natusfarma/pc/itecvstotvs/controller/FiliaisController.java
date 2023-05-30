@@ -1,21 +1,19 @@
 package com.natusfarma.pc.itecvstotvs.controller;
 
 import com.natusfarma.pc.itecvstotvs.model.ModeloFilial;
-import com.natusfarma.pc.itecvstotvs.model.ModeloPadrao;
-import com.natusfarma.pc.itecvstotvs.model.ModeloTotais;
-import com.natusfarma.pc.itecvstotvs.service.CompararDadosService;
 import com.natusfarma.pc.itecvstotvs.service.FiliaisService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 
 @RestController
 @RequestMapping("/filiais")
 public class FiliaisController {
+
+    private static final String NOME = "Filiais";
+    private static final String GRUPO = "";
 
     @Autowired
     private FiliaisService filiaisService;

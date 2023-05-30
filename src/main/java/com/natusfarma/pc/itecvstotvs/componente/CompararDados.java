@@ -1,9 +1,6 @@
 package com.natusfarma.pc.itecvstotvs.componente;
 
-import com.natusfarma.pc.itecvstotvs.componente.primario.DatabasePrimario;
-import com.natusfarma.pc.itecvstotvs.componente.secundario.DatabaseSecundario;
-import com.natusfarma.pc.itecvstotvs.ordenacao.OrdenarFornTituloFilialParcelaVencimento;
-import com.natusfarma.pc.itecvstotvs.model.ModeloPadrao;
+import com.natusfarma.pc.itecvstotvs.model.ModeloTipo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,68 +8,39 @@ import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class CompararDados {
+public abstract class CompararDados<T> implements QuantidadeColuna {
 
-    @Autowired
-    private DatabasePrimario bancoPrimarioService;
-    @Autowired
-    private DatabaseSecundario bancoSecundarioService;
     @Autowired
     private CsvFileWriter csvFileWriter;
+    private List<T> listaIguais;
+    private List<T> listaNaoEncontrada;
+    private List<T> listaSecundariaNaoEncontrada;
+    protected LocalDate dataInicio;
+    protected LocalDate dataFinal;
+    private Comparator<T> comparator;
 
-    private List<ModeloPadrao> listaIguais;
-    private List<ModeloPadrao> listaNaoEncontrada;
-    private List<ModeloPadrao> listaSecundariaNaoEncontrada;
-    private LocalDate dataInicio;
-    private LocalDate dataFinal;
 
 
-    /**
-     * Método principal onde realiza a regra de negócio.
-     * pega a data de início e fim e carrega a informação de cada banco em listas diferentes.
-     * depois é ordenada cada lista para melhor desempenho.
-     * @param inicio
-     * @param fim
-     */
-    public void processar(LocalDate inicio, LocalDate fim) {
-        dataInicio = inicio;
-        dataFinal = fim;
-        List<ModeloPadrao> listaBancoPrimario = bancoPrimarioService.processar(inicio, fim);
-        List<ModeloPadrao> listaBancoSecundario = bancoSecundarioService.processar(inicio, fim);
-        comparaValor(listaBancoPrimario, listaBancoSecundario);
-    }
-
-    /**
-     * Método principal onde realiza a regra de negócio.
-     * pega a data de início e fim e mais a filial e carrega a informação de cada banco em listas diferentes.
-     * depois é ordenada cada lista para melhor desempenho.
-     * @param filialId
-     * @param inicio
-     * @param fim
-     */
-    public void processarPorId(int filialId, LocalDate inicio, LocalDate fim) {
-        dataInicio = inicio;
-        dataFinal = fim;
-        List<ModeloPadrao> listaBancoPrimario = bancoPrimarioService.processarPorFilial(filialId, inicio, fim);
-        List<ModeloPadrao> listaBancoSecundario = bancoSecundarioService.processarPorFilial(filialId, inicio, fim);
-        comparaValor(listaBancoPrimario, listaBancoSecundario);
-    }
-
-    private void comparaValor(List<ModeloPadrao> listaBancoPrimario, List<ModeloPadrao> listaBancoSecundario) {
+    protected void comparaValor(List<T> listaBancoPrimario, List<T> listaBancoSecundario) {
         //ordenando as listas
-        List<ModeloPadrao> listaOrdenadaPrimario = ordenarLista(listaBancoPrimario);
-        List<ModeloPadrao> listaOrdenadaSecundario = ordenarLista(listaBancoSecundario);
+        List<T> listaOrdenadaPrimario = ordenarLista(listaBancoPrimario);
+        List<T> listaOrdenadaSecundario = ordenarLista(listaBancoSecundario);
 
         compararValores(listaOrdenadaPrimario,listaOrdenadaSecundario);
     }
 
-    private List<ModeloPadrao> ordenarLista(List<ModeloPadrao> listaBanco) {
+    private List<T> ordenarLista(List<T> listaBanco) {
+        if (comparator == null){
+            return listaBanco.stream()
+                    .collect(Collectors.toList());
+        }
         return listaBanco.stream()
-                .sorted(new OrdenarFornTituloFilialParcelaVencimento())
+                .sorted(comparator)
                 .collect(Collectors.toList());
     }
 
@@ -81,18 +49,17 @@ public class CompararDados {
      * @param bancoPrimario
      * @param bancoSecundario
      */
-    private void compararValores(List<ModeloPadrao> bancoPrimario,
-                                 List<ModeloPadrao> bancoSecundario) {
+    private void compararValores(List<T> bancoPrimario,
+                                 List<T> bancoSecundario) {
 
         boolean encontrado = false;
-        listaIguais = new ArrayList<>();
-        listaNaoEncontrada = new ArrayList<>();
+        inicializarListas();
 
         //listaSecundariaNaoEncontrada.addAll(bancoSecundario);
         listaSecundariaNaoEncontrada = bancoSecundario;
-        for (ModeloPadrao modeloPrimario : bancoPrimario) {
+        for (T modeloPrimario : bancoPrimario) {
             encontrado = false;
-            for (ModeloPadrao modeloSecundario : bancoSecundario) {
+            for (T modeloSecundario : bancoSecundario) {
                 if (isComparacao(modeloPrimario, modeloSecundario)) {
                     listaIguais.add(modeloPrimario);
                     encontrado = true;
@@ -106,7 +73,11 @@ public class CompararDados {
                 listaNaoEncontrada.add(modeloPrimario);
             }
         }
+    }
 
+    private void inicializarListas() {
+        listaIguais = new ArrayList<>();
+        listaNaoEncontrada = new ArrayList<>();
     }
 
     /**
@@ -116,24 +87,8 @@ public class CompararDados {
      * @param bancoSecundario
      * @return
      */
-    private boolean isComparacao(ModeloPadrao bancoPrimario, ModeloPadrao bancoSecundario) {
-        return bancoPrimario.getTitulo().equals(bancoSecundario.getTitulo()) &&
-                bancoPrimario.getCodFornecedor().equals(bancoSecundario.getCodFornecedor()) &&
-                bancoPrimario.getParcela() == bancoSecundario.getParcela() &&
-                bancoPrimario.getFilial() == bancoSecundario.getFilial() &&
-                bancoPrimario.getDataVencimento().isEqual(bancoSecundario.getDataVencimento());
-    }
-
-    public List<ModeloPadrao> getListaIguais() {
-        return listaIguais;
-    }
-
-    public List<ModeloPadrao> getListaNaoEncontrada() {
-        return listaNaoEncontrada;
-    }
-
-    public List<ModeloPadrao> getListaSecundariaNaoEncontrada() {
-        return listaSecundariaNaoEncontrada;
+    private boolean isComparacao(T bancoPrimario, T bancoSecundario) {
+        return bancoPrimario.equals(bancoSecundario);
     }
 
     public List<String> concatenarListas(){
@@ -148,10 +103,23 @@ public class CompararDados {
                 .collect(Collectors.toList()));
         listas.addAll(getListaSecundariaNaoEncontrada()
                 .stream()
-                .map(e -> "ITEC;;;;;;;;;;" + " TOTVS;"+e)
+                .map(e -> "ITEC;"+concatenar() + " TOTVS;"+e)
                 .collect(Collectors.toList()));
         return listas;
     }
+
+    /**
+     * Quantidade de colunas para concatenar listas do itec
+     * @return
+     */
+    private String concatenar(){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < quantidadeDeColunaDoTipo(); i++){
+            sb.append(";");
+        }
+        return sb.toString();
+    }
+
 
     public void imprimirListas(){
         System.out.println(cabecalho());
@@ -163,10 +131,11 @@ public class CompararDados {
                 "PERIODO INFORMADO;     "+formatarData(dataInicio) +" e "+formatarData(dataFinal) + System.lineSeparator() +
                 "TOTAIS Iguais;         "+getListaIguais().size() + System.lineSeparator() +
                 "TOTAIS Nao Encontrado; "+getListaNaoEncontrada().size() + System.lineSeparator() +
-                "TOTAIS Linhas Sobrando;"+getListaSecundariaNaoEncontrada( ).size() + System.lineSeparator() +
+                "TOTAIS Linhas Sobrando;"+getListaSecundariaNaoEncontrada().size() + System.lineSeparator() +
                 "------------------------------------------------------------------------------"
                 ;
     }
+
 
     public void gerarArquivoCsv(File file){
         csvFileWriter.setConcatenarArquivo(new String[] {cabecalho()});
@@ -175,7 +144,31 @@ public class CompararDados {
     }
 
     private String formatarData(LocalDate data){
+        if (data == null){
+            data = LocalDate.now();
+        }
         return data.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
+
+    public Comparator<T> getComparator() {
+        return comparator;
+    }
+
+    public void setComparator(Comparator<T> comparator) {
+        this.comparator = comparator;
+    }
+
+    public List<T> getListaIguais() {
+        return listaIguais;
+    }
+
+    public List<T> getListaNaoEncontrada() {
+        return listaNaoEncontrada;
+    }
+
+    public List<T> getListaSecundariaNaoEncontrada() {
+        return listaSecundariaNaoEncontrada;
+    }
+
 
 }

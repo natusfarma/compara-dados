@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public class FileStringUtil {
+public abstract class FileStringUtil {
 
-    public String FileToString(File file){
+    public static String FileToString(File file){
         try(InputStream in = new FileInputStream(file)){
             return IOUtils.toString(in, StandardCharsets.UTF_8);
         }catch (IOException e){

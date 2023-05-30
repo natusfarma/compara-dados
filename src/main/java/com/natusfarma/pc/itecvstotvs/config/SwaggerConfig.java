@@ -20,15 +20,15 @@ public class SwaggerConfig {
         return new Contact(
                 "Paulo César",
                 "http://api.itecvstotvs.local",
-                "natusfarma@natusfarma.com.br");
+                "paulo.silva@natusfarma.com.br");
     }
     private ApiInfoBuilder informacoesApi() {
 
         ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
 
-        apiInfoBuilder.title("Comparativo - de Contas a pagar");
+        apiInfoBuilder.title("Comparativo");
         apiInfoBuilder.description("API para comparação de registro do banco de dados Itec e Totvs");
-        apiInfoBuilder.version("1.0");
+        apiInfoBuilder.version("2.0");
         apiInfoBuilder.termsOfServiceUrl("Termo de uso: Open Source");
         apiInfoBuilder.license("Licença - Natus Farma");
         apiInfoBuilder.licenseUrl("http://api.itecvstotvs.local/licence");

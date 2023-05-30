@@ -1,4 +1,4 @@
-#server.port=9090
+#server.port=9091
 
 # Configuração para o primeiro banco de dados
 spring.datasource.primary.jdbc-url=
@@ -14,3 +14,6 @@ spring.datasource.secondary.driver-class-name=com.microsoft.sqlserver.jdbc.SQLSe
 
 #Swegger
 spring.mvc.pathmatch.matching-strategy=ant_path_matcher
+
+#servir páginas estaticas do angular
+spring.resources.static-locations=classpath:/static/
