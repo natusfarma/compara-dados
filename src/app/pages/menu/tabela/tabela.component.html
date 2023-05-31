@@ -1,0 +1,90 @@
+<ul class="list-group list-group-horizontal">
+  <button class="btn btn-listas" (click)="atualizarLista(iguais, 'itec','Iguais')">
+    Iguais: <span class="badge badge-light">{{iguaisQtd}}</span>
+  </button>
+  <button class="btn btn-listas" (click)="atualizarLista(itec,'itec','Itec')" >
+    Itec: <span class="badge badge-light">{{itecQtd}}</span>
+  </button>
+  <button class="btn btn-listas" (click)="atualizarLista(totvs,'totvs','Totvs')">
+    Totvs: <span class="badge badge-light">{{totvsQtd}}</span>
+  </button>
+  <button class="btn btn-baixar" (click)="baixarTabela()" >Baixar Tabela</button>
+
+  <span >
+    <form [formGroup]="formulario">
+
+      <select name="" id="" formControlName="coluna" (change)="alterarFiltro()">
+        <option value="">Selecione um Filtro</option>
+        <option  *ngFor="let coluna of (colunasFiltradas1.length > 0 ? colunasFiltradas1 : colunasFiltradas2)" 
+          [value]="coluna" > {{coluna | ajuste}}</option>
+      </select>
+
+      <input id="filtro" type="text" formControlName="filtro">
+
+      <button class="btn btn-baixar" (click)="filtrar()" [disabled]="colunaFiltrada == '' ">Filtrar </button>
+    </form>
+  </span>
+</ul>
+
+<ul class="list-group list-group-horizontal" *ngIf="tituloTabela === 'Iguais'">
+  <button class="btn btn-listas" (click)="mudarTabela(tabela,'itec/totvs')">itec | totvs</button>
+  <button class="btn btn-listas" (click)="mudarTabela(tabela,'itec')">itec </button>
+  <button class="btn btn-listas" (click)="mudarTabela(tabela,'totvs')">totvs </button>
+</ul>
+
+<ul class="list-group list-group-horizontal">
+  <ng-container *ngIf="colunas1.length> 0">
+    <button class="list-group-item" [ngClass]="{active:!colunasRemovidas.includes(coluna)}"
+      *ngFor="let coluna of colunas1" (click)="removerColuna(coluna)">{{coluna | ajuste}}</button>
+  </ng-container>
+
+  <ng-container *ngIf="(colunas2.length > 0 && colunas1.length  < 1 )">
+    <button class="list-group-item" [ngClass]="{active:!colunasRemovidas.includes(coluna)}"
+      *ngFor="let coluna of colunas2" (click)="removerColuna(coluna)">{{coluna | ajuste}}</button>
+  </ng-container>
+</ul>
+
+<div class="col-md-12">
+  <table class="table table-bordered border-secondary shadow-lg  table-striped">
+    <thead>
+      <tr>
+        <th class="titulo" [colSpan]="(colunasFiltradas1.length+colunasFiltradas2.length  )">{{tituloTabela}} </th>
+      </tr>
+
+      <tr *ngIf="tituloTabela === 'Iguais'">
+        
+        <th class="subTitulo" *ngIf="colunasFiltradas1.length > 0" [colSpan]="colunasFiltradas1.length">Itec
+        </th>
+        <th class="subTitulo" *ngIf="colunasFiltradas2.length > 0" [colSpan]="colunasFiltradas2.length">Totvs
+        </th>
+      </tr>
+
+      <tr>
+        
+        <th class="coluna pointer" *ngFor="let coluna of colunasFiltradas1" (click)="ordenarLista(coluna,'itec')"
+        [ngClass]="{active:atributoOrdenado === coluna && tipo === 'itec','desc':!asc,'asc':asc}">
+          {{coluna | ajuste}} 
+             </th>
+        <th class="coluna pointer" *ngFor="let coluna of colunasFiltradas2" (click)="ordenarLista(coluna,'totvs')" 
+        [ngClass]="{active:atributoOrdenado === coluna && tipo === 'totvs','desc':!asc,'asc':asc}">
+          {{coluna | ajuste}}
+          
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dadosLinha of tabelaFiltrada">
+        
+        <td *ngFor="let coluna of colunasFiltradas1">
+          {{dadosLinha.obj1[coluna] | verificarData:coluna}}
+        </td>
+
+        <td *ngFor="let coluna of colunasFiltradas2">
+          {{dadosLinha.obj2[coluna] | verificarData:coluna}}
+        </td>
+        
+      </tr>
+    </tbody>
+  </table>
+
+</div>

@@ -1,0 +1,52 @@
+table {
+    text-align: center;
+    margin-top: 10px;
+}
+
+button {
+    margin-top: 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+
+}
+
+th,
+td {
+    font-size: 90%;
+}
+
+.titulo {
+    background-color: #e3f2fd;
+}
+
+.subTitulo {
+    background-color: #e3f2fd;
+}
+
+.coluna {
+    background-color: #e3f2fd;
+    cursor: pointer;
+
+}
+
+.btn-listas {
+    background-color: #373435;
+    color: white;
+}
+
+.btn-baixar {
+    background-color: #D04040;
+    color: white;
+}
+
+
+
+.pointer.active.desc:after {
+    content: "▲";
+    float: right;
+}
+
+.pointer.active.asc:after {
+    content: "▼";
+    float: right;
+}

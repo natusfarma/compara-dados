@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="tabela">
+      <img alt="30" height="30" src="assets/images/NatusFarma.png" alt="">
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" *ngFor="let tabela of tabelas let i = index" >
+          <button type="button" class="btn aba position-relative nav-link" (click)="navegar(tabela.nome)"
+          
+            >
+            {{tabela.nome}}
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark"
+              (click)="fecharAba(i)">
+              X
+            </span>
+          </button>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="menu">
+        <form [formGroup]="formulario">
+            <ul class="list-group list-group-horizontal-sm">
+                <button *ngFor="let filtro of tabela?.modeloUrlMetodos" (click)="ativarFiltro(filtro)"
+                    class=" btn btn-outline-primary btn-sm" [ngClass]="{'active': filtro.ativo}">{{filtro.nome}}</button>
+
+            </ul>
+            <div class="row">
+                <div class="form-group col-6 col-md-4 col-lg-3" *ngFor="let filtro of filtroAtivo?.tipos let index = index">
+                    
+                    <input class="form-control" [type]="filtro" [id]="'filtro_'+index"
+                        [formControlName]="filtro+ '_' + index" (change)="processado = false">
+                </div>
+                
+            </div>
+            <button class="btn btn-primary" [disabled]="!formulario.valid || processado || !dadosRecebidos"
+                (click)="processar()">
+                <span *ngIf="!dadosRecebidos && processado" class="spinner-border spinner-border-sm"
+                    role="status"></span>
+                Processar
+            </button>
+
+            <span class="minutos">{{minNum | leadingZero}}</span>:<span class="segundos">{{segNum |
+                leadingZero}}</span>:<span class="milissegundos">{{miliNum | leadingZero }}</span>
+
+            <span *ngIf="mensagem != '' ">
+                {{mensagem}}
+            </span>
+
+        </form>
+    </div>
+    <app-tabela [listas]="listas"></app-tabela>
+</div>
