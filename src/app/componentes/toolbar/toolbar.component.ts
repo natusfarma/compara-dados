@@ -11,6 +11,7 @@ import { ToolbarService } from 'src/app/smp/services/toolbar.service';
 export class ToolbarComponent implements OnInit {
 
   tabelas:Tabela[] = [];
+  tabelaAtiva!:Tabela;
 
   constructor(private route: Router,private toolbarService:ToolbarService) {
 
@@ -24,6 +25,7 @@ export class ToolbarComponent implements OnInit {
     if(!existe){
       this.tabelas.push(tabela)
     }
+    this.tabelaAtiva = tabela
   }
 
   removerAcentos(str:string) {
@@ -39,7 +41,7 @@ export class ToolbarComponent implements OnInit {
     let tabela = this.tabelas[index];
     
     this.tabelas.splice(index,1);
-    if( this.route.url.includes(tabela.nome)){
+    if( this.route.url.includes(this.removerAcentos(tabela.nome))){
       if(index > 0){
         this.route.navigate(['tabela',this.removerAcentos(this.tabelas[index-1].nome)])
       }else{
@@ -50,9 +52,14 @@ export class ToolbarComponent implements OnInit {
    
   }
 
-  navegar(rota:string){
-    let url = this.removerAcentos(rota)
+  navegar(tabela:Tabela){
+    
+    this.tabelaAtiva = tabela
+    let url = this.removerAcentos(tabela.nome)
     this.route.navigate(['tabela',url])
   }
 
+  removerAtivo(){
+    this.tabelaAtiva = new Tabela
+  }
 }

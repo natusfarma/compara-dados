@@ -1,13 +1,14 @@
 <nav class="navbar navbar-expand">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="tabela">
+    <a class="navbar-brand" routerLink="tabela" (click)="removerAtivo()">
       <img alt="30" height="30" src="assets/images/NatusFarma.png" alt="">
     </a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item" *ngFor="let tabela of tabelas let i = index" >
-          <button type="button" class="btn aba position-relative nav-link" (click)="navegar(tabela.nome)"
+          <button type="button" class="btn aba position-relative nav-link" [ngClass]="{active: tabela.nome === tabelaAtiva.nome}" 
+          (click)="navegar(tabela)"
           
             >
             {{tabela.nome}}

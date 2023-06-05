@@ -1,5 +1,6 @@
 <div class="container-fluid">
     <div class="menu">
+        
         <form [formGroup]="formulario">
             <ul class="list-group list-group-horizontal-sm">
                 <button *ngFor="let filtro of tabela?.modeloUrlMetodos" (click)="ativarFiltro(filtro)"
@@ -27,7 +28,9 @@
             <span *ngIf="mensagem != '' ">
                 {{mensagem}}
             </span>
-
+            <div class="alert alert-danger" role="alert" *ngIf="erro">
+                Ocorreu algum erro.
+              </div>
         </form>
     </div>
     <app-tabela [listas]="listas"></app-tabela>

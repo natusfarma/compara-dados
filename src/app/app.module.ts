@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -16,6 +16,9 @@ import { LeadingZeroPipe } from './smp/pipes/leading-zero.pipe';
 import { OrdenarTabelaPipe } from './smp/pipes/ordenar-tabela.pipe';
 import { FiltrarColunaPipe } from './smp/pipes/filtrar-coluna.pipe';
 import { VerificarDataPipe } from './smp/pipes/verificar-data.pipe';
+import { NgxPaginationModule } from 'ngx-pagination';
+
+
 
 
 @NgModule({
@@ -30,8 +33,7 @@ import { VerificarDataPipe } from './smp/pipes/verificar-data.pipe';
     LeadingZeroPipe,
     OrdenarTabelaPipe,
     FiltrarColunaPipe,
-    VerificarDataPipe
-    
+    VerificarDataPipe,
   ],
   imports: [
     CommonModule,
@@ -39,6 +41,8 @@ import { VerificarDataPipe } from './smp/pipes/verificar-data.pipe';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgxPaginationModule,
+    FormsModule
     
   ],
   providers: [AjustePipe,OrdenarTabelaPipe,FiltrarColunaPipe],

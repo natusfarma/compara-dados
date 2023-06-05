@@ -19,6 +19,9 @@ export class TabelaComponent implements OnChanges, OnInit, OnDestroy {
   @Input() listas!: Resposta;
   tituloTabela: string = "Tabela"
 
+  itensPorPagina:number = 1000;
+  paginaAtual:number = 1;
+
   formulario!: FormGroup;
   valoresFiltrados: Array<any> = [];
   colunaFiltrada: string = '';
@@ -75,10 +78,17 @@ export class TabelaComponent implements OnChanges, OnInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
 
     if (changes['listas']) {
+      
       if (this.listas) {
+       
+        
         this.iguais = this.listas.listaIguais
         this.itec = this.listas.listaNaoEncontrada;
         this.totvs = this.listas.listaSecundariaNaoEncontrada;
+        this.colunaFiltrada = ''
+        this.valoresFiltrados = []
+        this.formulario.get('filtro')?.setValue('');
+        this.formulario.get('coluna')?.setValue('');
         if (this.itec.length > 0) {
           this.atualizarLista(this.itec, 'itec', 'Itec')
         } else {
@@ -105,6 +115,7 @@ export class TabelaComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   mudarTabela(tabela: Item[], tipo: string) {
+   
     this.iguaisSubs = tipo;
 
     this.colunas1 = []
@@ -204,7 +215,6 @@ export class TabelaComponent implements OnChanges, OnInit, OnDestroy {
     }).join('\n');
     return headers + resultado;
   }
-
 
 
 

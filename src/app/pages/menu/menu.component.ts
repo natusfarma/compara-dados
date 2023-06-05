@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, } from '@angular/router';
 import { Tabela } from 'src/app/smp/modals/tabela';
 import { ToolbarService } from 'src/app/smp/services/toolbar.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { modeloUrlMetodos} from 'src/app/smp/modals/modeloUrlMetodos';
+import { modeloUrlMetodos } from 'src/app/smp/modals/modeloUrlMetodos';
 import { Resposta } from 'src/app/smp/modals/resposta';
 import { ComparadorService } from 'src/app/smp/services/comparador.service';
 import { Subscription } from 'rxjs';
@@ -15,24 +15,24 @@ import { Subscription } from 'rxjs';
 })
 export class MenuComponent implements OnInit, OnDestroy {
 
-  
+
   private subscriptions: Subscription[] = []
   tabela!: Tabela;
   listas!: Resposta;
   filtroAtivo!: modeloUrlMetodos;
   processado: boolean = false;
-  miliNum:number =0;
-  segNum:number =0;
-  minNum:number =0;
+  miliNum: number = 0;
+  segNum: number = 0;
+  minNum: number = 0;
 
   dadosRecebidos: boolean = true;
-  mensagem:string = '';
+  mensagem: string = '';
   tempoDecorrido!: string;
   timer: any;
-
+  erro: boolean = false;
   formulario!: FormGroup;
   tituloTabela: string = "Tabela";
-  reset:boolean = false;
+  reset: boolean = false;
 
   constructor(private comparadorService: ComparadorService, private fb: FormBuilder,
     private activatedRoute: ActivatedRoute, private router: Router, private toolbarService: ToolbarService) { }
@@ -50,20 +50,20 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   atualizarTabela(rota: string) {
     this.resetar()
-    
+
     this.toolbarService.verificarTabela(rota).subscribe(res => {
       if (res === undefined) {
         this.router.navigate(['tabelas'])
       } else {
-        
+
         this.tabela = res
         this.toolbarService.novaAba(res)
         this.ativarFiltro(this.tabela.modeloUrlMetodos[0])
         this.criarFormulario()
-  
+
       }
     });
-   
+
   }
 
   criarFormulario() {
@@ -72,8 +72,8 @@ export class MenuComponent implements OnInit, OnDestroy {
     for (let i = 0; i < tipo.length; i++) {
       const e = tipo[i] + '_' + i;
       this.formulario.addControl(e, this.fb.control('', Validators.required))
-    }  
-    
+    }
+
   }
 
   ativarFiltro(filtro: modeloUrlMetodos) {
@@ -92,57 +92,69 @@ export class MenuComponent implements OnInit, OnDestroy {
   processar() {
     this.processado = true;
     this.dadosRecebidos = false;
+    this.erro = false;
     this.mensagem = '';
-    let url = this.tabela.urlClass +this.parametros();
-    
+    let url = this.tabela.urlClass + this.parametros();
+
     this.iniciar()
 
+    this.listas = {
+      listaIguais:[],
+      listaNaoEncontrada:[],
+      listaSecundariaNaoEncontrada:[]
+    }
+
     this.comparadorService.processar(url)
-      .subscribe(res=> {
+      .subscribe((res) => {
         this.parar()
         this.dadosRecebidos = true;
-        
+
         this.listas = res;
-        if(this.listas.listaIguais.length === 0 && 
+        if (this.listas.listaIguais.length === 0 &&
           this.listas.listaNaoEncontrada.length === 0 &&
-          this.listas.listaSecundariaNaoEncontrada.length === 0 ){
-              this.mensagem = "Nenhum registro encontrado."
-            }
-      }
+          this.listas.listaSecundariaNaoEncontrada.length === 0) {
+          this.mensagem = "Nenhum registro encontrado."
+        }
+      },
+        (err) => {
+          
+          this.erro = true;
+          this.dadosRecebidos = true;
+          this.parar()
+        }
       )
-      
-      
-    
+
+
   }
+
 
   parametros(): string {
     let dados = '';
     if (this.filtroAtivo.tipos[0] === 'date') {
-      
+
 
       let dataInicio: Date = this.formulario.get('date_0')?.value;
       let dataFim: Date = this.formulario.get('date_1')?.value;
       dados = `?ini=${dataInicio}&fim=${dataFim}`;
     } else {
       let ids = this.formulario.get('text_0')?.value;
-      if(ids.endsWith(',')){
-        ids = ids.slice(0, -1);
-      }
+      
+      
       dados = '/?ids=' + ids;
     }
-    
-    return this.filtroAtivo.url+dados;
+
+    return this.filtroAtivo.url + dados;
   }
 
-  resetar(){
+  resetar() {
     this.parar()
     this.miliNum = 0;
     this.segNum = 0;
     this.minNum = 0;
-   
+
   }
 
-  iniciar(){
+  iniciar() {
     this.resetar()
     this.timer = setInterval(() => {
       this.milissegundos()
@@ -151,17 +163,17 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   milissegundos() {
     this.miliNum++;
-    
+
     if (this.miliNum == 99) {
       this.miliNum = 0
       this.segundos()
     }
   }
-  
+
   segundos() {
     this.segNum++;
-    if(this.segNum == 59){
-      this.segNum =0;
+    if (this.segNum == 59) {
+      this.segNum = 0;
       this.minutos()
     }
   }
@@ -169,7 +181,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   minutos() {
     this.minNum++;
   }
-  parar(){
+  parar() {
     clearInterval(this.timer)
   }
 }
