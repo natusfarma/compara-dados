@@ -22,6 +22,8 @@ public class RowMapperNotaFiscal {
             modeloNotaFiscal.setDataEmissao(dataEmissao);
             modeloNotaFiscal.setChave(rs.getString("CHAVE").trim());
             modeloNotaFiscal.setCodCliente(rs.getInt("CLIENTE"));
+            modeloNotaFiscal.setStatus(rs.getString("CANCELADO"));
+            modeloNotaFiscal.setFilialTotvs(rs.getString("FILIAL_TOTVS"));
         }catch (SQLException e){
             throw new ConversaoNaoEncontradaException(e.getMessage(), e.getCause());
         }

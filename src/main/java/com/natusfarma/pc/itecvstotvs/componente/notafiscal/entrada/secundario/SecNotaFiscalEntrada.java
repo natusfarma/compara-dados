@@ -29,8 +29,9 @@ public class SecNotaFiscalEntrada extends Databases<ModeloNotaFiscal> {
     private File file = new File(DiretorioArquivos.NOTAFISCAL_ENTRADA+ NOME_ARQUIVO_SQL);
 
     public List<ModeloNotaFiscal> processar(LocalDate inicio, LocalDate fim){
-        String condicao = montaCondicaoPeriodo("F1_EMISSAO", inicio, fim );
-        String query = lerArquivoConsulta(file, condicao,"");
+        String condicao1 = montaCondicaoPeriodo("F1_RECBMTO", inicio, fim );
+        String condicao2 = montaCondicaoPeriodo("F3_ENTRADA", inicio, fim );
+        String query = lerArquivoConsulta(file, condicao1,condicao2);
         return consulta(query, secundaJdbcTemplate, (rs, rowNum) -> rowMapperNotaFiscal.modeloPadrao(rs));
     }
 

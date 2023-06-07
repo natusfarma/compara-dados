@@ -10,7 +10,7 @@ public class ModeloContasPagar {
     private Long codFornecedor;
     private String nomeFornecedor;
     private LocalDate dataVencimento;
-    private LocalDate dataEmissao; 
+    private LocalDate dataEmissao;
     private int parcela;
     private int numNota;
     private double valor;

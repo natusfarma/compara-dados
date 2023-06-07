@@ -1,6 +1,7 @@
 package com.natusfarma.pc.itecvstotvs.controller.notafiscal;
 
-import com.natusfarma.pc.itecvstotvs.controller.TipoNomes;
+import com.natusfarma.pc.itecvstotvs.controller.EnumGrupos;
+import com.natusfarma.pc.itecvstotvs.controller.EnumNomes;
 import com.natusfarma.pc.itecvstotvs.controller.TipoRetorno;
 import com.natusfarma.pc.itecvstotvs.model.ModeloListas;
 import com.natusfarma.pc.itecvstotvs.model.ModeloNotaFiscal;
@@ -20,13 +21,13 @@ import java.time.LocalDate;
 public class NotaFiscalSaidaController {
 
     private static final String NOME = "Saída";
-    private static final String GRUPO = "Nota Fiscal";
+    private static final String GRUPO = EnumGrupos.NOTAFISCAL.getValue();
 
     @Autowired
     private NotaFiscalSaidaService compararService;
 
 
-    @TipoRetorno(TipoNomes.EMISSAO)
+    @TipoRetorno(EnumNomes.EMISSAO)
     @GetMapping("/processar")
     //processar/?ini=2023-04-14&fim=2023-04-15
     public ModeloListas<ModeloNotaFiscal> processar(@RequestParam("ini") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate ini,

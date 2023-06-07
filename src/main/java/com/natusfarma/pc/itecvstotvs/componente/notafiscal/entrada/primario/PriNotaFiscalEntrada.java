@@ -28,7 +28,7 @@ public class PriNotaFiscalEntrada extends Databases<ModeloNotaFiscal> {
     private File file = new File(DiretorioArquivos.NOTAFISCAL_ENTRADA+ NOME_ARQUIVO_SQL);
 
     public List<ModeloNotaFiscal> processar(LocalDate inicio, LocalDate fim){
-        String condicao = montaCondicaoPeriodo("DT_EMI_NF", inicio, fim );
+        String condicao = montaCondicaoPeriodo("DT_ENT", inicio, fim );
         String query = lerArquivoConsulta(file, condicao, "");
         return consulta(query, primaryJdbcTemplate, (rs, rowNum) -> rowMapperNotaFiscal.modeloPadrao(rs));
     }

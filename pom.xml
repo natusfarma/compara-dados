@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.natusfarma.pc</groupId>
 	<artifactId>itecvstotvs</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<name>itecvstotvs</name>
 	<description>Comparar dados itec vs totvs</description>
 	<properties>

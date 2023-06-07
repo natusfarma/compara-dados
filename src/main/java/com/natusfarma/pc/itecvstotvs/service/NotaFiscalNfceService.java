@@ -42,7 +42,7 @@ public class NotaFiscalNfceService extends CompararDadosTipo<ModeloNotaFiscal> {
 
     @Override
     public int quantidadeDeColunaDoTipo() {
-        return 6;
+        return 8;
     }
 
 

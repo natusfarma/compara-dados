@@ -1,6 +1,7 @@
 package com.natusfarma.pc.itecvstotvs.controller.financeiro;
 
-import com.natusfarma.pc.itecvstotvs.controller.TipoNomes;
+import com.natusfarma.pc.itecvstotvs.controller.EnumGrupos;
+import com.natusfarma.pc.itecvstotvs.controller.EnumNomes;
 import com.natusfarma.pc.itecvstotvs.controller.TipoRetorno;
 import com.natusfarma.pc.itecvstotvs.model.ModeloCheque;
 import com.natusfarma.pc.itecvstotvs.model.ModeloListas;
@@ -17,13 +18,13 @@ import java.time.LocalDate;
 public class ChequeController {
 
     private static final String NOME = "Cheque";
-    private static final String GRUPO = "Financeiro";
+    private static final String GRUPO = EnumGrupos.FINANCEIRO.getValue();
 
     @Autowired
     private ChequeService chequeService;
 
 
-    @TipoRetorno(TipoNomes.EMISSAO)
+    @TipoRetorno(EnumNomes.EMISSAO)
     @GetMapping("/processar")
     //processar/?ini=2023-04-14&fim=2023-04-15
     public ModeloListas<ModeloCheque> processar(@RequestParam("ini") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate ini,

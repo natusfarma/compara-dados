@@ -1,6 +1,8 @@
 package com.natusfarma.pc.itecvstotvs.componente;
 
 import com.natusfarma.pc.itecvstotvs.controller.TipoRetorno;
+import com.natusfarma.pc.itecvstotvs.model.ModeloCheque;
+import com.natusfarma.pc.itecvstotvs.model.ModeloNdf;
 import com.natusfarma.pc.itecvstotvs.model.ModeloUrlMetodo;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Component;
@@ -8,13 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public abstract class MapClass {
@@ -96,8 +95,13 @@ public abstract class MapClass {
 
         }
         return stringList;
-
     }
+
+    public static int totalDeAtributos(Class<?> controllerClass){
+        Field[] fields = controllerClass.getDeclaredFields();
+        return fields.length;
+    }
+
 
     private String TipoRetorno(Method method){
         if (!method.isAnnotationPresent(TipoRetorno.class)) return "SEM NOME";
@@ -111,14 +115,14 @@ public abstract class MapClass {
         String[] typos = new String[totalParametros];
         for(int i = 0; i < totalParametros; i++){
             Parameter p = method.getParameters()[i];
-            typos[i] = analisarTypo(p.getAnnotatedType());
+            typos[i] = analisarTypo(p.getType().getTypeName());
         }
         return typos;
     }
 
 
-    private String analisarTypo(AnnotatedType annotatedType){
-        String valor = annotatedType.toString();
+    private String analisarTypo(String  typeName){
+        String valor = typeName;
         switch (valor){
             case "java.time.LocalDate": valor = "date"; break;
             case "java.lang.String[]": valor = "text"; break;

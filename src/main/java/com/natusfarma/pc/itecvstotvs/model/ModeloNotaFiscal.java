@@ -10,6 +10,8 @@ public class ModeloNotaFiscal {
     private LocalDate dataEmissao;
     private String chave;
     private int codCliente;
+    private String status;
+    private String filialTotvs;
 
     public int getFilial() {
         return filial;
@@ -59,6 +61,22 @@ public class ModeloNotaFiscal {
         this.codCliente = codCliente;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getFilialTotvs() {
+        return filialTotvs;
+    }
+
+    public void setFilialTotvs(String filialTotvs) {
+        this.filialTotvs = filialTotvs;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,6 +107,10 @@ public class ModeloNotaFiscal {
                 ";" + dataEmissao +
                 ";" + chave +
                 ";" + codCliente +
+                ";" + status +
+                ";" + filialTotvs +
                 ";" ;
     }
+
+
 }

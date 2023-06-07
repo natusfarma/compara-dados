@@ -1,14 +1,13 @@
 package com.natusfarma.pc.itecvstotvs.controller;
 
-public enum TipoNomes {
+public enum EnumGrupos {
 
-    EMISSAO("Data de Emissão"),
-    VENCIMENTO("Data de Validade"),
-    CNPJ_CPF("Cnpj/Cpf"),
-    IDS("Códigos");
+    NOTAFISCAL("Nota Fiscal"),
+    CADASTRO("Cadastro"),
+    FINANCEIRO("Financeiro");
 
     private String value;
-    TipoNomes(String value){
+    EnumGrupos(String value){
         this.value = value;
     }
 

@@ -13,6 +13,10 @@ import com.natusfarma.pc.itecvstotvs.componente.filial.primario.PriFilial;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.contaspagar.secundario.SecContasPagar;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.primario.PriCrediario;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.secundario.SecCrediario;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.fechamento_estoque.primario.PriFechEstoque;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.fechamento_estoque.secundario.SecFechEstoque;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.ndf.primario.PriNdf;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.ndf.secundario.SecNdf;
 import com.natusfarma.pc.itecvstotvs.componente.notafiscal.entrada.primario.PriNotaFiscalEntrada;
 import com.natusfarma.pc.itecvstotvs.componente.notafiscal.entrada.secundario.SecNotaFiscalEntrada;
 import com.natusfarma.pc.itecvstotvs.componente.notafiscal.nfce.primario.PriNotaFiscalNfce;
@@ -112,6 +116,21 @@ public class BancoConfig {
     public SecNotaFiscalNfce secNotaFiscalNfce(){
         return new SecNotaFiscalNfce();
     }
-
+    @Bean
+    public PriNdf priNdf(){
+        return new PriNdf();
+    }
+    @Bean
+    public SecNdf secNdf(){
+        return new SecNdf();
+    }
+    @Bean
+    public PriFechEstoque priFechEstoque(){
+        return new PriFechEstoque();
+    }
+    @Bean
+    public SecFechEstoque secFechEstoque(){
+        return new SecFechEstoque();
+    }
 
 }

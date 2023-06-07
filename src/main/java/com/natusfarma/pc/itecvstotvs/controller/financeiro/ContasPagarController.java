@@ -1,6 +1,7 @@
 package com.natusfarma.pc.itecvstotvs.controller.financeiro;
 
-import com.natusfarma.pc.itecvstotvs.controller.TipoNomes;
+import com.natusfarma.pc.itecvstotvs.controller.EnumGrupos;
+import com.natusfarma.pc.itecvstotvs.controller.EnumNomes;
 import com.natusfarma.pc.itecvstotvs.controller.TipoRetorno;
 import com.natusfarma.pc.itecvstotvs.model.ModeloContasPagar;
 import com.natusfarma.pc.itecvstotvs.model.ModeloListas;
@@ -17,12 +18,12 @@ import java.time.LocalDate;
 public class ContasPagarController {
 
     private static final String NOME = "Contas a Pagar";
-    private static final String GRUPO = "Financeiro";
+    private static final String GRUPO = EnumGrupos.FINANCEIRO.getValue();
 
     @Autowired
     private ContasPagarService contasPagarService;
 
-    @TipoRetorno(TipoNomes.VENCIMENTO)
+    @TipoRetorno(EnumNomes.VENCIMENTO)
     @GetMapping("/processar")
     //processar/?ini=2023-04-14&fim=2023-04-15
     public ModeloListas<ModeloContasPagar> processar(@RequestParam("ini") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate ini,

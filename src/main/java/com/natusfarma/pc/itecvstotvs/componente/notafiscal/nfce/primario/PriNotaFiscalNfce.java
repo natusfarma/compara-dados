@@ -26,8 +26,8 @@ public class PriNotaFiscalNfce extends Databases<ModeloNotaFiscal> {
     private File file = new File(DiretorioArquivos.NOTAFISCAL_NFCE+ NOME_ARQUIVO_SQL);
 
     public List<ModeloNotaFiscal> processar(LocalDate inicio, LocalDate fim){
-        String condicao = montaCondicaoPeriodo("DT_VD", inicio, fim );
-        String query = lerArquivoConsulta(file, condicao, "");
+        String condicao = montaCondicaoPeriodo("PDV_VD.DT_VD", inicio, fim );
+        String query = lerArquivoConsulta(file, condicao, condicao);
         return consulta(query, primaryJdbcTemplate, (rs, rowNum) -> rowMapperNotaFiscal.modeloPadrao(rs));
     }
 
