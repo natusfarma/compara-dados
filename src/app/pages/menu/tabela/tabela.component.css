@@ -1,6 +1,7 @@
 table {
     text-align: center;
     margin-top: 10px;
+    margin-bottom: 50px;
 }
 
 button {
@@ -86,8 +87,8 @@ td {
     bottom: 0;
     width: 100%;
     margin-left: -12px;
-   display: flex;
-   justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .itensPorPagina{
@@ -110,4 +111,8 @@ td {
 }
 .itensPorPagina option{
     color: black;
+}
+
+select{
+    border-radius: 20px;
 }

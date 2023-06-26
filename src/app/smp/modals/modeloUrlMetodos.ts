@@ -3,4 +3,5 @@ export class modeloUrlMetodos{
     nome!:string;
     ativo!:boolean;
     tipos!:Array<string>;
+    parametros!:Array<string>
 }

@@ -19,8 +19,8 @@ export class TabelaComponent implements OnChanges, OnInit, OnDestroy {
   @Input() listas!: Resposta;
   tituloTabela: string = "Tabela"
 
-  itensPorPagina:number = 1000;
-  paginaAtual:number = 1;
+  itensPorPagina: number = 1000;
+  paginaAtual: number = 1;
 
   formulario!: FormGroup;
   valoresFiltrados: Array<any> = [];
@@ -78,10 +78,10 @@ export class TabelaComponent implements OnChanges, OnInit, OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
 
     if (changes['listas']) {
-      
+
       if (this.listas) {
-       
-        
+
+
         this.iguais = this.listas.listaIguais
         this.itec = this.listas.listaNaoEncontrada;
         this.totvs = this.listas.listaSecundariaNaoEncontrada;
@@ -115,7 +115,7 @@ export class TabelaComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   mudarTabela(tabela: Item[], tipo: string) {
-   
+
     this.iguaisSubs = tipo;
 
     this.colunas1 = []
@@ -200,19 +200,25 @@ export class TabelaComponent implements OnChanges, OnInit, OnDestroy {
       headers += ';'
     }
     headers += this.colunasFiltradas2.map(col => this.ajuste.transform(col)).join(';') + '\n';
+
     let resultado = tabela.map(item => {
+
       let valoresObj1 = this.colunasFiltradas1
         .map(col => {
           return item.obj1[col];
         }).join(';');
+
       let valoresObj2 = this.colunasFiltradas2
         .map(col => { return item.obj2[col] }
         ).join(';')
+
       if (valoresObj1 === '') {
         return valoresObj2;
       }
       return valoresObj1 + ';' + valoresObj2;
+      
     }).join('\n');
+
     return headers + resultado;
   }
 

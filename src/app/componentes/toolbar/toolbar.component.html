@@ -5,7 +5,7 @@
     </a>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-2">
         <li class="nav-item" *ngFor="let tabela of tabelas let i = index" >
           <button type="button" class="btn aba position-relative nav-link" [ngClass]="{active: tabela.nome === tabelaAtiva.nome}" 
           (click)="navegar(tabela)"
@@ -19,7 +19,11 @@
           </button>
 
         </li>
+        
       </ul>
+      <span class="navbar-text">
+        Versão-2.0.0
+      </span>
     </div>
   </div>
 </nav>

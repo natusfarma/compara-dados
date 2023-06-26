@@ -16,7 +16,7 @@
     <form [formGroup]="formulario">
 
       <select name="coluna" id="coluna" formControlName="coluna" (change)="alterarFiltro()">
-        <option value="" hidden>Selecione um Filtro</option>
+        <option value="" hidden>Selecione um filtro</option>
         <option *ngFor="let coluna of (colunasFiltradas1.length > 0 ? colunasFiltradas1 : colunasFiltradas2)"
           [value]="coluna"> {{coluna | ajuste}}</option>
       </select>
@@ -90,6 +90,9 @@
       </td>
 
     </tr>
+
+    
+   
   </tbody>
 </table>
 

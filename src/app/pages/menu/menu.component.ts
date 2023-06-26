@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, } from '@angular/core';
 import { ActivatedRoute, Router, } from '@angular/router';
 import { Tabela } from 'src/app/smp/modals/tabela';
 import { ToolbarService } from 'src/app/smp/services/toolbar.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { modeloUrlMetodos } from 'src/app/smp/modals/modeloUrlMetodos';
 import { Resposta } from 'src/app/smp/modals/resposta';
 import { ComparadorService } from 'src/app/smp/services/comparador.service';
@@ -34,6 +34,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   tituloTabela: string = "Tabela";
   reset: boolean = false;
 
+  controles: FormControl[] = [];
+
   constructor(private comparadorService: ComparadorService, private fb: FormBuilder,
     private activatedRoute: ActivatedRoute, private router: Router, private toolbarService: ToolbarService) { }
 
@@ -59,35 +61,40 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.tabela = res
         this.toolbarService.novaAba(res)
         this.ativarFiltro(this.tabela.modeloUrlMetodos[0])
-        this.criarFormulario()
 
       }
     });
 
   }
 
-  criarFormulario() {
-    let tipo = this.filtroAtivo.tipos;
-    this.formulario = this.fb.group({})
-    for (let i = 0; i < tipo.length; i++) {
-      const e = tipo[i] + '_' + i;
-      this.formulario.addControl(e, this.fb.control('', Validators.required))
-    }
-
-  }
-
   ativarFiltro(filtro: modeloUrlMetodos) {
+    if(filtro != this.filtroAtivo)
     for (let i = 0; i < this.tabela.modeloUrlMetodos.length; i++) {
       const f = this.tabela.modeloUrlMetodos[i];
       if (filtro === f) {
         f.ativo = true;
-        this.filtroAtivo = f;
       } else {
         f.ativo = false;
       }
     }
-    this.criarFormulario()
+    this.filtroAtivo = filtro;
+    this.criarFormulario(filtro)
+   
+    
   }
+
+
+  criarFormulario(filtro: modeloUrlMetodos) {
+    this.controles = [];
+    for (let i = 0; i < filtro.tipos.length; i++) {
+      this.controles.push(this.fb.control('',Validators.required));
+    }
+    this.formulario = this.fb.group({}); 
+    for (let i = 0; i < this.controles.length; i++) {
+      this.formulario.addControl('filtro_' + i, this.controles[i]);
+    }
+  }
+
 
   processar() {
     this.processado = true;
@@ -95,13 +102,12 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.erro = false;
     this.mensagem = '';
     let url = this.tabela.urlClass + this.parametros();
-
     this.iniciar()
 
     this.listas = {
-      listaIguais:[],
-      listaNaoEncontrada:[],
-      listaSecundariaNaoEncontrada:[]
+      listaIguais: [],
+      listaNaoEncontrada: [],
+      listaSecundariaNaoEncontrada: []
     }
 
     this.comparadorService.processar(url)
@@ -116,36 +122,54 @@ export class MenuComponent implements OnInit, OnDestroy {
           this.mensagem = "Nenhum registro encontrado."
         }
       },
-        (err) => {
-          
+        () => {
           this.erro = true;
           this.dadosRecebidos = true;
           this.parar()
         }
       )
-
-
   }
 
-
   parametros(): string {
-    let dados = '';
-    if (this.filtroAtivo.tipos[0] === 'date') {
+    let dados = '?';
 
-
-      let dataInicio: Date = this.formulario.get('date_0')?.value;
-      let dataFim: Date = this.formulario.get('date_1')?.value;
-      dados = `?ini=${dataInicio}&fim=${dataFim}`;
-    } else {
-      let ids = this.formulario.get('text_0')?.value;
+    for (let i = 0; i < this.filtroAtivo.parametros.length; i++) {
+      const param = this.filtroAtivo.parametros[i];
+      const valores = this.formulario.get('filtro_' + i)?.value
+      dados += param + '=' + this.obterValores(valores);
       
       
-      dados = '/?ids=' + ids;
+      if (i != (this.filtroAtivo.tipos.length - 1)) {
+        dados += "&"
+      }
     }
-
     return this.filtroAtivo.url + dados;
   }
 
+  obterValores(valores: string): string {
+    const numeros: string[] = valores.split(',');
+  
+    const resultado = [];
+  
+    for (let i = 0; i < numeros.length; i++) {
+      const numero = numeros[i];
+  
+      if (numero.includes( '(' ) && numero.includes( ')' )) {
+        
+        const periodos = numero.replace(/\(|\)/g, '');
+        const [inicio, fim] = periodos.split('-');
+  
+        for (let j = parseInt(inicio); j <= parseInt(fim); j++) {
+          resultado.push(j);
+        }
+      } else {
+        resultado.push(numero);
+      }
+    }
+  
+    return resultado.join(',');
+  }
+  
   resetar() {
     this.parar()
     this.miliNum = 0;
