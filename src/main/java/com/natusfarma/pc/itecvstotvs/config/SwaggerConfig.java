@@ -28,7 +28,7 @@ public class SwaggerConfig {
 
         apiInfoBuilder.title("Comparativo");
         apiInfoBuilder.description("API para comparação de registro do banco de dados Itec e Totvs");
-        apiInfoBuilder.version("2.0");
+        apiInfoBuilder.version("2.5");
         apiInfoBuilder.termsOfServiceUrl("Termo de uso: Open Source");
         apiInfoBuilder.license("Licença - Natus Farma");
         apiInfoBuilder.licenseUrl("http://api.itecvstotvs.local/licence");

@@ -1,6 +1,7 @@
 package com.natusfarma.pc.itecvstotvs.service;
 
 import com.natusfarma.pc.itecvstotvs.componente.CompararDadosTipo;
+import com.natusfarma.pc.itecvstotvs.componente.MapClass;
 import com.natusfarma.pc.itecvstotvs.componente.cadastro.cliente.primario.PriClientes;
 import com.natusfarma.pc.itecvstotvs.componente.cadastro.cliente.secundario.SecClientes;
 import com.natusfarma.pc.itecvstotvs.model.ModeloClientes;
@@ -42,7 +43,7 @@ public class ClientesService extends CompararDadosTipo<ModeloClientes> {
 
     @Override
     public int quantidadeDeColunaDoTipo() {
-        return 6;
+        return MapClass.totalDeAtributos(this.getClass());
     }
 
 

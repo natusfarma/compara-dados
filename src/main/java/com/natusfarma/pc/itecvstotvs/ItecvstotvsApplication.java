@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 
@@ -39,11 +40,6 @@ public class ItecvstotvsApplication {// implements CommandLineRunner {
 ////		compararDadosProdutoService.processarPorIds(ids);
 ////		compararDadosProdutoService.imprimirListas();
 //
-//		System.out.println("------------------------------");
-//
-//		System.out.println("total de atributos "+MapClass.totalDeAtributos(ModeloNdf.class));
-//
-//		System.out.println("------------------------------");
 //
 //	}
 

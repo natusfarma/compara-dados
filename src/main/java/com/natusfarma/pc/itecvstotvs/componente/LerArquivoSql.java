@@ -28,12 +28,25 @@ public abstract class LerArquivoSql {
         return lerArquivoConsulta(file, "", "");
     }
 
-    public String montaCondicaoPeriodo(String coluna, LocalDate inicio, LocalDate fim) {
+    /*public String montaCondicaoPeriodo(String coluna, LocalDate inicio, LocalDate fim) {
         String dataInicial = inicio.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         String dataFinal = fim.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        String condicaoPeriodo = String.format("AND %s BETWEEN '%s' AND '%s'", coluna, dataInicial, dataFinal);
+        String condicaoPeriodo = String.format(" AND %s BETWEEN '%s' AND '%s'", coluna, dataInicial, dataFinal);
+        return condicaoPeriodo;
+    }*/
+
+    public String montaCondicaoPeriodo(String coluna, LocalDate inicio, LocalDate fim) {
+        String condicaoPeriodo = String.format(" AND %s ", coluna) + periodo(inicio, fim);
         return condicaoPeriodo;
     }
+
+    public String periodo(LocalDate inicio, LocalDate fim) {
+        String dataInicial = inicio.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String dataFinal = fim.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String condicaoPeriodo = String.format(" BETWEEN '%s' AND '%s'", dataInicial, dataFinal);
+        return condicaoPeriodo;
+    }
+
 
     private int contemValor(String result, String str){
         return result.toUpperCase().indexOf(str);

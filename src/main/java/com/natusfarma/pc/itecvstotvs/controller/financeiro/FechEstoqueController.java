@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 
 
-@RestController
-@RequestMapping("/financeiro/fechamento/estoque")
+//@RestController
+//@RequestMapping("/financeiro/fechamento/estoque")
 public class FechEstoqueController {
 
-    private static final String NOME = "Fechamento de Estoque";
+    /*private static final String NOME = "Fechamento de Estoque";
     private static final String GRUPO = EnumGrupos.FINANCEIRO.getValue();
 
     @Autowired
@@ -31,10 +31,22 @@ public class FechEstoqueController {
     @TipoRetorno(EnumNomes.MES_ANO_REF)
     @GetMapping("/processar")
     //processar/?ini=2023-04-14&fim=2023-04-15
-    public ModeloListas<ModeloFechEstoque> processarEmissao(@RequestParam("ini") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate ini,
+    public ModeloListas<ModeloFechEstoque> processar(@RequestParam("ini") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate ini,
                                                             @RequestParam("fim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim){
         return fechEstoqueService.processar(ini,fim);
     }
+
+
+    @TipoRetorno(EnumNomes.CANCELADO)
+    @GetMapping("/processar/teste")
+    //processar/?ini=2023-04-14&fim=2023-04-15
+    public String processarEmissao(@RequestParam("AAA") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate ini,
+                                                            @RequestParam("BBB") String valor,
+                                                            @RequestParam("CCC") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim,
+                                                            @RequestParam("EEE") int valor1) {
+        return ini + " " + valor + " " + fim + " " + valor1;
+    }
+*/
 
 
 

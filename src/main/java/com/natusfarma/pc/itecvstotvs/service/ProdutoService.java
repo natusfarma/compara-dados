@@ -1,6 +1,7 @@
 package com.natusfarma.pc.itecvstotvs.service;
 
 import com.natusfarma.pc.itecvstotvs.componente.CompararDadosTipo;
+import com.natusfarma.pc.itecvstotvs.componente.MapClass;
 import com.natusfarma.pc.itecvstotvs.componente.cadastro.produto.primario.PriProduto;
 import com.natusfarma.pc.itecvstotvs.componente.cadastro.produto.secundario.SecProduto;
 import com.natusfarma.pc.itecvstotvs.model.ModeloListas;
@@ -35,7 +36,7 @@ public class ProdutoService extends CompararDadosTipo<ModeloProduto> {
 
     @Override
     public int quantidadeDeColunaDoTipo() {
-        return 5;
+        return MapClass.totalDeAtributos(this.getClass());
     }
 
 

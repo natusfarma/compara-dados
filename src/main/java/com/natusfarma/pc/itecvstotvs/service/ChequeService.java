@@ -1,6 +1,7 @@
 package com.natusfarma.pc.itecvstotvs.service;
 
 import com.natusfarma.pc.itecvstotvs.componente.CompararDadosTipo;
+import com.natusfarma.pc.itecvstotvs.componente.MapClass;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.cheque.primario.PriCheque;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.cheque.secundario.SecCheque;
 import com.natusfarma.pc.itecvstotvs.model.ModeloCheque;
@@ -42,7 +43,7 @@ public class ChequeService extends CompararDadosTipo<ModeloCheque> {
 
     @Override
     public int quantidadeDeColunaDoTipo() {
-        return 13;
+        return MapClass.totalDeAtributos(this.getClass());
     }
 
 

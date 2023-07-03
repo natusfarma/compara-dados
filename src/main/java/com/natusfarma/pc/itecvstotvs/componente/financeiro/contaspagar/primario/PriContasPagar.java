@@ -33,6 +33,12 @@ public class PriContasPagar extends Databases<ModeloContasPagar> {
         return consulta(query, primaryJdbcTemplate, (rs, rowNum) -> rowMapperContasPagar.modeloPadrao(rs));
     }
 
+    public List<ModeloContasPagar> processarEmissao(LocalDate inicio, LocalDate fim) {
+        String condicao = montaCondicaoPeriodo("PG_CRED.DT_EMIS", inicio, fim );
+        String query = lerArquivoConsulta(file, condicao);
+        return consulta(query, primaryJdbcTemplate, (rs, rowNum) -> rowMapperContasPagar.modeloPadrao(rs));
+    }
+
     public List<ModeloContasPagar> processarPorFilial(int filialId, LocalDate inicio, LocalDate fim){
         String[] condicoes = new String[] {
                 montaCondicaoPeriodo("PG_CRED.DT_VENCTO", inicio, fim ),

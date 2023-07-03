@@ -14,8 +14,11 @@ import com.natusfarma.pc.itecvstotvs.ordenacao.financeiro.ndf.OrdenarFornTituloF
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FechEstoqueService extends CompararDadosTipo<ModeloFechEstoque> {
@@ -44,6 +47,35 @@ public class FechEstoqueService extends CompararDadosTipo<ModeloFechEstoque> {
         comparaValor(listaBancoPrimario, listaBancoSecundario);
         return getModeloListas();
     }
+
+
+    // ANALISAR O CÓDIGO BAIXA PARADO POR OUTRA DEMANDA.
+    public void diferencaEstoque(List<ModeloFechEstoque> listaBancoPrimario, List<ModeloFechEstoque> listaBancoSecundario ){
+
+        List<ModeloFechEstoque> novaLista = new ArrayList<>();
+        novaLista.addAll(listaBancoSecundario);
+        for(int i = 0; i < listaBancoPrimario.size() ; i++) {
+            for(int j = 0; j < novaLista.size() ; j++) {
+                if (isComparacao(listaBancoPrimario.get(i), novaLista.get(j))) {
+                    BigDecimal diferenca = BigDecimal.valueOf(listaBancoPrimario.get(i).getTotalCusto())
+                            .subtract(BigDecimal.valueOf(novaLista.get(j).getTotalCusto()));
+                    listaBancoPrimario.get(i).setDiferenca(diferenca);
+                    listaBancoSecundario.get(j).setDiferenca(diferenca);
+                    novaLista.remove(novaLista.get(j));
+                    break;
+                }
+            }
+        }
+        comparaValor(listaBancoPrimario, listaBancoSecundario);
+
+    }
+
+    private boolean isComparacao(ModeloFechEstoque bancoPrimario, ModeloFechEstoque bancoSecundario){
+        return bancoPrimario.getFilial() == bancoSecundario.getFilial();
+    }
+
+
+
 
 
     @Override

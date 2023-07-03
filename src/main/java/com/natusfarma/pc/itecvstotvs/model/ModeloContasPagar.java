@@ -102,6 +102,31 @@ public class ModeloContasPagar {
                  ";" ;
 
     }
+//
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof ModeloContasPagar)) return false;
+//
+//        ModeloContasPagar that = (ModeloContasPagar) o;
+//
+//        if (filial != that.filial) return false;
+//        if (!titulo.equals(that.titulo)) return false;
+//        if (!codFornecedor.equals(that.codFornecedor)) return false;
+//        if (parcela != that.parcela) return false;
+//        return dataVencimento.equals(that.dataVencimento);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = titulo.hashCode();
+//        result = 31 * result + codFornecedor.hashCode();
+//        result = 31 * result + dataVencimento.hashCode();
+//        result = 31 * result + parcela;
+//        result = 31 * result + filial;
+//        return result;
+//    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -110,21 +135,20 @@ public class ModeloContasPagar {
 
         ModeloContasPagar that = (ModeloContasPagar) o;
 
+        if (parcela != that.parcela) return false;
         if (filial != that.filial) return false;
         if (!titulo.equals(that.titulo)) return false;
         if (!codFornecedor.equals(that.codFornecedor)) return false;
-        if (parcela != that.parcela) return false;
-        return dataVencimento.equals(that.dataVencimento);
+        return dataEmissao.equals(that.dataEmissao);
     }
 
     @Override
     public int hashCode() {
         int result = titulo.hashCode();
         result = 31 * result + codFornecedor.hashCode();
-        result = 31 * result + dataVencimento.hashCode();
+        result = 31 * result + dataEmissao.hashCode();
         result = 31 * result + parcela;
         result = 31 * result + filial;
         return result;
     }
-
 }

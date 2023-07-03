@@ -30,7 +30,7 @@ public class PriProduto extends Databases<ModeloProduto> {
 
 
     public List<ModeloProduto> processarPorIds(String[] valores){
-        String condicao = String.format(" AND CD_PROD IN (%s) ", ConcatenarNumeros.concatenar(valores));
+        String condicao = String.format(" AND P.CD_PROD IN (%s) ", ConcatenarNumeros.concatenar(valores));
         String query = lerArquivoConsulta(file, condicao);
         return consulta(query, primaryJdbcTemplate, (rs, rowNum) -> rowMapperProduto.modeloPadrao(rs));
     }

@@ -31,4 +31,22 @@ public class CrediarioController {
         return crediarioService.processar(ini,fim);
     }
 
+    @TipoRetorno(EnumNomes.PAGAMENTO)
+    @GetMapping("/processar/pagamento")
+    public ModeloListas<ModeloCrediario> processarDataPagamento(@RequestParam("ini") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate ini,
+                                                   @RequestParam("fim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim){
+        return crediarioService.processarDataPagamento(ini,fim);
+    }
+
+
+    @TipoRetorno(EnumNomes.NUMEROS_FILIAIS)
+    @GetMapping("/processar/numeros_filais")
+    //processar/id/?ids=2,3,53562,80000
+    public ModeloListas<ModeloCrediario> processarNumerosFiliais(@RequestParam("numeros") String[] numeros,
+                                                      @RequestParam("filiais") String[] filiais){
+        return crediarioService.processarNumerosFiliais(numeros, filiais);
+    }
+
+
+
 }

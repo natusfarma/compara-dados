@@ -8,6 +8,7 @@ import org.reflections.Reflections;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Field;
@@ -90,6 +91,7 @@ public abstract class MapClass {
                 modeloUrlMetodo.setUrl(String.join(", ", values));
                 modeloUrlMetodo.setTipos(retornaTypos(method));
                 modeloUrlMetodo.setNome(TipoRetorno(method));
+                modeloUrlMetodo.setParametros(TipoParametro(method));
                 stringList.add(modeloUrlMetodo);
             }
 
@@ -108,6 +110,18 @@ public abstract class MapClass {
         TipoRetorno tipoRetorno = method.getAnnotation(TipoRetorno.class);
         String value = tipoRetorno.value().getValue();
         return value;
+    }
+
+    private String[] TipoParametro(Method method){
+        Parameter[] parameters = method.getParameters();
+        String[] par = new String[parameters.length];
+        for(int i = 0; i < parameters.length; i++){
+            RequestParam requestParam = parameters[i].getAnnotation(RequestParam.class);
+            if (requestParam != null){
+                par[i] = requestParam.value();
+            }
+        }
+        return par;
     }
 
     private String[] retornaTypos(Method method) {

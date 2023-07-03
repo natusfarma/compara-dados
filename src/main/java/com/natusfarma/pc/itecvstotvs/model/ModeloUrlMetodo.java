@@ -8,6 +8,8 @@ public class ModeloUrlMetodo {
     private String url;
     private String[] tipos;
 
+    private String[] parametros;
+
     public String getUrl() {
         return url;
     }
@@ -24,6 +26,14 @@ public class ModeloUrlMetodo {
         this.tipos = tipos;
     }
 
+    public String[] getParametros() {
+        return parametros;
+    }
+
+    public void setParametros(String[] parametros) {
+        this.parametros = parametros;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -35,9 +45,10 @@ public class ModeloUrlMetodo {
     @Override
     public String toString() {
         return "ModeloUrlMetodo{" +
-                "url='" + url + '\'' +
+                "nome='" + nome + '\'' +
+                ", url='" + url + '\'' +
                 ", tipos=" + Arrays.toString(tipos) +
-                ", nome='" + nome + '\'' +
+                ", parametros=" + Arrays.toString(parametros) +
                 '}';
     }
 }

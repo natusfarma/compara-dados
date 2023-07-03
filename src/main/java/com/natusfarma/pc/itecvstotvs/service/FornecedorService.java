@@ -1,6 +1,7 @@
 package com.natusfarma.pc.itecvstotvs.service;
 
 import com.natusfarma.pc.itecvstotvs.componente.CompararDadosTipo;
+import com.natusfarma.pc.itecvstotvs.componente.MapClass;
 import com.natusfarma.pc.itecvstotvs.componente.cadastro.fornecedor.primario.PriFornecedor;
 import com.natusfarma.pc.itecvstotvs.componente.cadastro.fornecedor.secundario.SecFornecedor;
 import com.natusfarma.pc.itecvstotvs.model.ModeloFornecedor;
@@ -42,7 +43,7 @@ public class FornecedorService extends CompararDadosTipo<ModeloFornecedor> {
 
     @Override
     public int quantidadeDeColunaDoTipo() {
-        return 6;
+        return MapClass.totalDeAtributos(this.getClass());
     }
 
 

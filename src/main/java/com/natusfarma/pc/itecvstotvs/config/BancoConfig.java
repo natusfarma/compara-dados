@@ -6,6 +6,8 @@ import com.natusfarma.pc.itecvstotvs.componente.cadastro.cliente.primario.PriCli
 import com.natusfarma.pc.itecvstotvs.componente.cadastro.cliente.secundario.SecClientes;
 import com.natusfarma.pc.itecvstotvs.componente.cadastro.produto.primario.PriProduto;
 import com.natusfarma.pc.itecvstotvs.componente.cadastro.produto.secundario.SecProduto;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.cartoes.primario.PriCartoes;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.cartoes.secundario.SecCartoes;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.cheque.primario.PriCheque;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.cheque.secundario.SecCheque;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.contaspagar.primario.PriContasPagar;
@@ -131,6 +133,14 @@ public class BancoConfig {
     @Bean
     public SecFechEstoque secFechEstoque(){
         return new SecFechEstoque();
+    }
+    @Bean
+    public PriCartoes priCartoes(){
+        return new PriCartoes();
+    }
+    @Bean
+    public SecCartoes secCartoes(){
+        return new SecCartoes();
     }
 
 }

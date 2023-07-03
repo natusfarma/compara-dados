@@ -1,15 +1,18 @@
 package com.natusfarma.pc.itecvstotvs.ordenacao.financeiro.crediario;
 
-import com.natusfarma.pc.itecvstotvs.model.ModeloCheque;
 import com.natusfarma.pc.itecvstotvs.model.ModeloCrediario;
 
 import java.util.Comparator;
 
-public class OrdenarClienteNumeroEmissaoValor implements Comparator<ModeloCrediario> {
+public class OrdenarFilialClienteNumeroEmissaoValor implements Comparator<ModeloCrediario> {
 
 
     @Override
     public int compare(ModeloCrediario o1, ModeloCrediario o2) {
+        int compararFilial = Integer.compare(o1.getFilial(), o2.getFilial());
+        if (compararFilial != 0){
+            return compararFilial;
+        }
         int compararCliente = Integer.compare(o1.getCodCliente(), o2.getCodCliente());
         if (compararCliente != 0){
             return compararCliente;

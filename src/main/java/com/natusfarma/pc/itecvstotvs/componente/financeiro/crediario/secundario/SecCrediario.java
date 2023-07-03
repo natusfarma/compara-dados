@@ -1,12 +1,11 @@
 package com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.secundario;
 
 import com.natusfarma.pc.itecvstotvs.componente.Databases;
-import com.natusfarma.pc.itecvstotvs.componente.financeiro.cheque.RowMapperCheque;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.RowMapperCrediario;
 import com.natusfarma.pc.itecvstotvs.config.ChooseDB;
 import com.natusfarma.pc.itecvstotvs.config.TipoConexao;
-import com.natusfarma.pc.itecvstotvs.model.ModeloCheque;
 import com.natusfarma.pc.itecvstotvs.model.ModeloCrediario;
+import com.natusfarma.pc.itecvstotvs.util.ConcatenarString;
 import com.natusfarma.pc.itecvstotvs.util.DiretorioArquivos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,6 +29,20 @@ public class SecCrediario extends Databases<ModeloCrediario> {
 
     public List<ModeloCrediario> processar(LocalDate inicio, LocalDate fim){
         String condicao = montaCondicaoPeriodo("E1_EMISSAO", inicio, fim );
+        String query = lerArquivoConsulta(file, condicao);
+        return consulta(query, secundaJdbcTemplate, (rs, rowNum) -> rowMapperCrediario.modeloPadrao(rs));
+    }
+
+    public List<ModeloCrediario> processarDataPagamento(LocalDate inicio, LocalDate fim) {
+        String condicao = montaCondicaoPeriodo("E5_DATA", inicio, fim );
+        String query = lerArquivoConsulta(file, condicao);
+        return consulta(query, secundaJdbcTemplate, (rs, rowNum) -> rowMapperCrediario.modeloPadrao(rs));
+    }
+
+
+    public List<ModeloCrediario> processarNumerosFiliais(String[] numeros, String[] filiais) {
+        String condicao = String.format(" AND E1_NUM IN ( %s ) AND ZZ1_FILLIN IN ( %s )",
+                    ConcatenarString.concatenar(numeros), ConcatenarString.concatenar(filiais));
         String query = lerArquivoConsulta(file, condicao);
         return consulta(query, secundaJdbcTemplate, (rs, rowNum) -> rowMapperCrediario.modeloPadrao(rs));
     }

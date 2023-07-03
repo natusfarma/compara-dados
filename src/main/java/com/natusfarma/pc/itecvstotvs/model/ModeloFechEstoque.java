@@ -1,11 +1,14 @@
 package com.natusfarma.pc.itecvstotvs.model;
 
+import java.math.BigDecimal;
+
 public class ModeloFechEstoque {
 
     private int filial;
     private long totalItens;
     private double totalCusto;
     private String dataReferencia;
+    private BigDecimal diferenca;
 
     public int getFilial() {
         return filial;
@@ -37,6 +40,14 @@ public class ModeloFechEstoque {
 
     public void setDataReferencia(String dataReferencia) {
         this.dataReferencia = dataReferencia;
+    }
+
+    public BigDecimal getDiferenca() {
+        return diferenca;
+    }
+
+    public void setDiferenca(BigDecimal diferenca) {
+        this.diferenca = diferenca;
     }
 
     @Override

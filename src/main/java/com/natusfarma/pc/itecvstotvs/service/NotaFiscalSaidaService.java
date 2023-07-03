@@ -1,6 +1,7 @@
 package com.natusfarma.pc.itecvstotvs.service;
 
 import com.natusfarma.pc.itecvstotvs.componente.CompararDadosTipo;
+import com.natusfarma.pc.itecvstotvs.componente.MapClass;
 import com.natusfarma.pc.itecvstotvs.componente.notafiscal.saida.primario.PriNotaFiscalSaida;
 import com.natusfarma.pc.itecvstotvs.componente.notafiscal.saida.secundario.SecNotaFiscalSaida;
 import com.natusfarma.pc.itecvstotvs.model.ModeloListas;
@@ -42,7 +43,7 @@ public class NotaFiscalSaidaService extends CompararDadosTipo<ModeloNotaFiscal> 
 
     @Override
     public int quantidadeDeColunaDoTipo() {
-        return 8;
+        return MapClass.totalDeAtributos(this.getClass());
     }
 
 

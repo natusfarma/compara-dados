@@ -31,4 +31,12 @@ public class ContasPagarController {
         return contasPagarService.processar(ini,fim);
     }
 
+    @TipoRetorno(EnumNomes.EMISSAO)
+    @GetMapping("/processarEmissao")
+    //processar/?ini=2023-04-14&fim=2023-04-15
+    public ModeloListas<ModeloContasPagar> processarEmissao(@RequestParam("ini") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate ini,
+                                                     @RequestParam("fim") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim){
+        return contasPagarService.processarEmissao(ini,fim);
+    }
+
 }

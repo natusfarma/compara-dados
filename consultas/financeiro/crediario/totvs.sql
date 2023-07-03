@@ -1,20 +1,25 @@
 SELECT  
-	ZZ1_FILLIN													AS FILIAL,
-	E1_NUM 														AS NUMERO,
-	E1_CLIENTE 													AS CODCLIENTE,
-	CONVERT(DATE, E1_EMISSAO, 103)	 		AS EMISSAO,
-	CONVERT(DATE, E1_VENCTO, 103)	 		AS VENCIMENTO,
-	E1_VALOR													AS VALOR,
-	'0'																AS CUPOM,
-	'0'																AS CAIXA,
-	E1_SALDO													AS SALDO,
-	E1_NOMCLI													AS NOME,
-	CONVERT(DATE, E1_BAIXA, 103) 				AS BAIXA
+	ZZ1_FILLIN																				AS FILIAL,
+	E1_NUM 																					AS NUMERO,
+	E1_CLIENTE 																				AS CODCLIENTE,
+	CONVERT(DATE, E1_EMISSAO, 103)	 											AS EMISSAO,
+	CONVERT(DATE, E1_VENCTO, 103)	 											AS VENCIMENTO,
+	E1_VALOR																					AS VALOR,
+	ISNULL(E5_VALOR,0)																	AS VALOR_BAIXA,
+	E1_NOMCLI																				AS NOME,
+	E1_CONTA																					AS NCC,
+	CONVERT(DATE,ISNULL(E5_DATA,'19000101'), 103)						AS DT_BAIXA
+	--,MOV.*
 FROM 
 	SE1010 S
-	INNER JOIN ZZ1010 F ON F.ZZ1_FILPRO = S.E1_FILORIG
+	INNER JOIN ZZ1010 F 
+		ON F.ZZ1_FILPRO = S.E1_FILORIG
+		AND F.D_E_L_E_T_ = ''
+	LEFT JOIN SE5010  MOV 
+		ON S.E1_NUM = MOV.E5_NUMERO 
+		AND S.E1_FILORIG = E5_FILORIG
+		AND MOV.D_E_L_E_T_ = ''
 WHERE 
 	S.D_E_L_E_T_ = '' 
-	AND F.D_E_L_E_T_ = ''
 	AND E1_TIPO = 'CR'
 	

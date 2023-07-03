@@ -1,6 +1,7 @@
 package com.natusfarma.pc.itecvstotvs.service;
 
 import com.natusfarma.pc.itecvstotvs.componente.CompararDadosTipo;
+import com.natusfarma.pc.itecvstotvs.componente.MapClass;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.contaspagar.primario.PriContasPagar;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.contaspagar.secundario.SecContasPagar;
 import com.natusfarma.pc.itecvstotvs.model.ModeloListas;
@@ -40,6 +41,15 @@ public class ContasPagarService extends CompararDadosTipo<ModeloContasPagar> {
         return getModeloListas();
     }
 
+    public ModeloListas<ModeloContasPagar> processarEmissao(LocalDate inicio, LocalDate fim) {
+        dataInicio = inicio;
+        dataFinal = fim;
+        List<ModeloContasPagar> listaBancoPrimario = bancoPrimarioService.processarEmissao(inicio, fim);
+        List<ModeloContasPagar> listaBancoSecundario = bancoSecundarioService.processarEmissao(inicio, fim);
+        comparaValor(listaBancoPrimario, listaBancoSecundario);
+        return getModeloListas();
+    }
+
     /**
      * Método principal onde realiza a regra de negócio.
      * pega a data de início e fim e mais a filial e carrega a informação de cada banco em listas diferentes.
@@ -59,7 +69,7 @@ public class ContasPagarService extends CompararDadosTipo<ModeloContasPagar> {
 
     @Override
     public int quantidadeDeColunaDoTipo() {
-        return 8;
+        return MapClass.totalDeAtributos(this.getClass());
     }
 
 

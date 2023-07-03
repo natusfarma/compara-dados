@@ -2,11 +2,11 @@ package com.natusfarma.pc.itecvstotvs.service;
 
 import com.natusfarma.pc.itecvstotvs.componente.CompararDadosTipo;
 import com.natusfarma.pc.itecvstotvs.componente.MapClass;
-import com.natusfarma.pc.itecvstotvs.componente.notafiscal.nfce.primario.PriNotaFiscalNfce;
-import com.natusfarma.pc.itecvstotvs.componente.notafiscal.nfce.secundario.SecNotaFiscalNfce;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.cartoes.primario.PriCartoes;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.cartoes.secundario.SecCartoes;
+import com.natusfarma.pc.itecvstotvs.model.ModeloCartoes;
 import com.natusfarma.pc.itecvstotvs.model.ModeloListas;
-import com.natusfarma.pc.itecvstotvs.model.ModeloNotaFiscal;
-import com.natusfarma.pc.itecvstotvs.ordenacao.notafiscal.OrdenarFilialNumeroSerieEmissao;
+import com.natusfarma.pc.itecvstotvs.ordenacao.financeiro.cartoes.OrdenarFilialClienteNumeroEmissaoValor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +14,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class NotaFiscalNfceService extends CompararDadosTipo<ModeloNotaFiscal> {
+public class CartoesService extends CompararDadosTipo<ModeloCartoes> {
 
     @Autowired
-    private PriNotaFiscalNfce bancoPrimarioService;
+    private PriCartoes bancoPrimarioService;
     @Autowired
-    private SecNotaFiscalNfce bancoSecundarioService;
+    private SecCartoes bancoSecundarioService;
 
-    public NotaFiscalNfceService() {
-        setComparator(new OrdenarFilialNumeroSerieEmissao());
+    public CartoesService() {
+        setComparator(new OrdenarFilialClienteNumeroEmissaoValor());
     }
 
     /**
@@ -32,11 +32,11 @@ public class NotaFiscalNfceService extends CompararDadosTipo<ModeloNotaFiscal> {
      * @param inicio
      * @param fim
      */
-    public ModeloListas<ModeloNotaFiscal> processar(LocalDate inicio, LocalDate fim) {
+    public ModeloListas<ModeloCartoes> processar(LocalDate inicio, LocalDate fim) {
         dataInicio = inicio;
         dataFinal = fim;
-        List<ModeloNotaFiscal> listaBancoPrimario = bancoPrimarioService.processar(inicio, fim);
-        List<ModeloNotaFiscal> listaBancoSecundario = bancoSecundarioService.processar(inicio, fim);
+        List<ModeloCartoes> listaBancoPrimario = bancoPrimarioService.processar(inicio, fim);
+        List<ModeloCartoes> listaBancoSecundario = bancoSecundarioService.processar(inicio, fim);
         comparaValor(listaBancoPrimario, listaBancoSecundario);
         return getModeloListas();
     }
