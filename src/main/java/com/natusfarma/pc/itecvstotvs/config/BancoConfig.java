@@ -17,6 +17,8 @@ import com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.primario.Pr
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.secundario.SecCrediario;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.fechamento_estoque.primario.PriFechEstoque;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.fechamento_estoque.secundario.SecFechEstoque;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.midia.primario.PriMidia;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.midia.secundario.SecMidia;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.ndf.primario.PriNdf;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.ndf.secundario.SecNdf;
 import com.natusfarma.pc.itecvstotvs.componente.notafiscal.entrada.primario.PriNotaFiscalEntrada;
@@ -142,5 +144,12 @@ public class BancoConfig {
     public SecCartoes secCartoes(){
         return new SecCartoes();
     }
-
+    @Bean
+    public PriMidia priMidia(){
+        return new PriMidia();
+    }
+    @Bean
+    public SecMidia secMidia(){
+        return new SecMidia();
+    }
 }

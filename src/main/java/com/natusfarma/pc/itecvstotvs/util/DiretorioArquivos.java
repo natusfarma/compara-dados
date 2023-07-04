@@ -14,6 +14,7 @@ public abstract class DiretorioArquivos {
     public static final String FECHAMENTO_ESTOQUE = PADRAO + "financeiro/fechamento_estoque/";
     public static final String NDF = PADRAO + "financeiro/ndf/";
     public static final String CARTOES = PADRAO + "financeiro/cartoes/";
+    public static final String MIDIA = PADRAO + "financeiro/midia/";
     public static final String NOTAFISCAL_ENTRADA = PADRAO + "notasfiscais/entrada/";
     public static final String NOTAFISCAL_SAIDA = PADRAO + "notasfiscais/saida/";
     public static final String NOTAFISCAL_NFCE = PADRAO + "notasfiscais/nfce/";
