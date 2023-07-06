@@ -2,24 +2,15 @@ package com.natusfarma.pc.itecvstotvs.model;
 
 import java.time.LocalDate;
 
-public class ModeloMidia {
+public class ModeloCrediarioEmissao {
 
     private int filial;
-    private String numero;
+    private int numero;
     private int codCliente;
     private String nome;
     private LocalDate dataEmissao;
-    private LocalDate dataVenciamento;
+    private LocalDate dataVencimento;
     private double valor;
-    private double saldo;
-    private String status;
-
-    public int getCodCliente() {
-        return codCliente;
-    }
-    public void setCodCliente(int codCliente) {
-        this.codCliente = codCliente;
-    }
 
     public int getFilial() {
         return filial;
@@ -29,12 +20,20 @@ public class ModeloMidia {
         this.filial = filial;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public int getCodCliente() {
+        return codCliente;
+    }
+
+    public void setCodCliente(int codCliente) {
+        this.codCliente = codCliente;
     }
 
     public LocalDate getDataEmissao() {
@@ -43,6 +42,13 @@ public class ModeloMidia {
 
     public void setDataEmissao(LocalDate dataEmissao) {
         this.dataEmissao = dataEmissao;
+    }
+    public LocalDate getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(LocalDate dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
 
     public double getValor() {
@@ -61,56 +67,32 @@ public class ModeloMidia {
         this.nome = nome;
     }
 
-    public LocalDate getDataVenciamento() {
-        return dataVenciamento;
-    }
-
-    public void setDataVenciamento(LocalDate dataVenciamento) {
-        this.dataVenciamento = dataVenciamento;
-    }
-
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     @Override
     public String toString() {
-        return
-                 ";" + codCliente +
-                 ";" + filial +
-                 ";" + numero +
-                 ";" + dataEmissao +
-                 ";" + dataVenciamento +
-                 ";" + valor +
-                 ";" + saldo  +
-                 ";" + nome  +
-                 ";" + status +
-                 ";" ;
+        return        filial +
+                ";" + numero +
+                ";" + codCliente +
+                ";" + nome +
+                ";" + dataEmissao +
+                ";" + dataVencimento +
+                ";" + String.valueOf(valor).replace(".",",") +
+                ";" ;
+
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ModeloMidia)) return false;
+        if (!(o instanceof ModeloCrediarioEmissao)) return false;
 
-        ModeloMidia that = (ModeloMidia) o;
+        ModeloCrediarioEmissao that = (ModeloCrediarioEmissao) o;
 
         if (filial != that.filial) return false;
+        if (numero != that.numero) return false;
         if (codCliente != that.codCliente) return false;
         if (Double.compare(that.valor, valor) != 0) return false;
-        return numero.equals(that.numero);
+        return dataEmissao.equals(that.dataEmissao);
     }
 
     @Override
@@ -118,10 +100,12 @@ public class ModeloMidia {
         int result;
         long temp;
         result = filial;
-        result = 31 * result + numero.hashCode();
+        result = 31 * result + numero;
         result = 31 * result + codCliente;
+        result = 31 * result + dataEmissao.hashCode();
         temp = Double.doubleToLongBits(valor);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
+
 }

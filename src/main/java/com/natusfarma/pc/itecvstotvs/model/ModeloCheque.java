@@ -17,6 +17,7 @@ public class ModeloCheque {
     private int codCliente;
     private String nome;
     private String cgcCpf;
+    private String status;
 
     public int getFilial() {
         return filial;
@@ -122,6 +123,14 @@ public class ModeloCheque {
         this.cgcCpf = cgcCpf;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -162,6 +171,7 @@ public class ModeloCheque {
                 ";" + codCliente +
                 ";" + nome +
                 ";" + cgcCpf +
+                ";" + status +
                 ";" ;
     }
 

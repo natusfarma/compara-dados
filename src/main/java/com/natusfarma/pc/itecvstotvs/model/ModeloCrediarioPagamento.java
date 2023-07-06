@@ -2,7 +2,7 @@ package com.natusfarma.pc.itecvstotvs.model;
 
 import java.time.LocalDate;
 
-public class ModeloCrediario {
+public class ModeloCrediarioPagamento {
 
     private int filial;
     private int numero;
@@ -102,9 +102,9 @@ public class ModeloCrediario {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ModeloCrediario)) return false;
+        if (!(o instanceof ModeloCrediarioPagamento)) return false;
 
-        ModeloCrediario that = (ModeloCrediario) o;
+        ModeloCrediarioPagamento that = (ModeloCrediarioPagamento) o;
 
         if (filial != that.filial) return false;
         if (numero != that.numero) return false;
@@ -129,30 +129,4 @@ public class ModeloCrediario {
         return result;
     }
 
-    //    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (!(o instanceof ModeloCrediario)) return false;
-//
-//        ModeloCrediario that = (ModeloCrediario) o;
-//
-//        if (filial != that.filial) return false;
-//        if (numero != that.numero) return false;
-//        if (codCliente != that.codCliente) return false;
-//        if (Double.compare(that.valorPago, valorPago) != 0) return false;
-//        return dataEmissao.equals(that.dataEmissao);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result;
-//        long temp;
-//        result = filial;
-//        result = 31 * result + numero;
-//        result = 31 * result + codCliente;
-//        result = 31 * result + dataEmissao.hashCode();
-//        temp = Double.doubleToLongBits(valorPago);
-//        result = 31 * result + (int) (temp ^ (temp >>> 32));
-//        return result;
-//    }
 }

@@ -1,7 +1,6 @@
 package com.natusfarma.pc.itecvstotvs.componente.financeiro.midia;
 
 import com.natusfarma.pc.itecvstotvs.exception.ConversaoNaoEncontradaException;
-import com.natusfarma.pc.itecvstotvs.model.ModeloCrediario;
 import com.natusfarma.pc.itecvstotvs.model.ModeloMidia;
 import com.natusfarma.pc.itecvstotvs.util.ConverterTipo;
 import org.springframework.stereotype.Component;

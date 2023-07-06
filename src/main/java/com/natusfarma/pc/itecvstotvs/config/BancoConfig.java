@@ -13,8 +13,10 @@ import com.natusfarma.pc.itecvstotvs.componente.financeiro.cheque.secundario.Sec
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.contaspagar.primario.PriContasPagar;
 import com.natusfarma.pc.itecvstotvs.componente.filial.primario.PriFilial;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.contaspagar.secundario.SecContasPagar;
-import com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.primario.PriCrediario;
-import com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.secundario.SecCrediario;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.primario.PriCrediarioEmissao;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.primario.PriCrediarioPagamento;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.secundario.SecCrediarioEmissao;
+import com.natusfarma.pc.itecvstotvs.componente.financeiro.crediario.secundario.SecCrediarioPagamento;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.fechamento_estoque.primario.PriFechEstoque;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.fechamento_estoque.secundario.SecFechEstoque;
 import com.natusfarma.pc.itecvstotvs.componente.financeiro.midia.primario.PriMidia;
@@ -67,7 +69,6 @@ public class BancoConfig {
     public SecFornecedor secFornecedor(){
         return new SecFornecedor();
     }
-
     @Bean
     public PriProduto priProduto(){
         return new PriProduto();
@@ -76,7 +77,6 @@ public class BancoConfig {
     public SecProduto secProduto(){
         return new SecProduto();
     }
-
     @Bean
     public PriCheque priCheque(){
         return new PriCheque();
@@ -87,12 +87,20 @@ public class BancoConfig {
     }
 
     @Bean
-    public PriCrediario priCrediario(){
-        return new PriCrediario();
+    public PriCrediarioEmissao priCrediarioEmissao(){
+        return new PriCrediarioEmissao();
     }
     @Bean
-    public SecCrediario secCrediario(){
-        return new SecCrediario();
+    public SecCrediarioEmissao secCrediarioEmissao(){
+        return new SecCrediarioEmissao();
+    }
+    @Bean
+    public PriCrediarioPagamento priCrediarioPagamento(){
+        return new PriCrediarioPagamento();
+    }
+    @Bean
+    public SecCrediarioPagamento secCrediarioPagamento(){
+        return new SecCrediarioPagamento();
     }
     @Bean
     public PriNotaFiscalEntrada priNotaFiscalEntrada(){

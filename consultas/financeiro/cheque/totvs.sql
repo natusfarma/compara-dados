@@ -11,7 +11,8 @@ SELECT
 	COALESCE(NULLIF(E1_BCOCHQ, ''), 0)		AS BANCO,
 	E1_AGECHQ													AS AGENCIA,
 	E1_NOMCLI													AS NOME,
-	'' 																	AS CGC_CPF
+	'' 																	AS CGC_CPF,
+	'?'																	AS STS_CH
 FROM 
 	SE1010 S
 	INNER JOIN ZZ1010 F ON F.ZZ1_FILPRO = S.E1_FILORIG

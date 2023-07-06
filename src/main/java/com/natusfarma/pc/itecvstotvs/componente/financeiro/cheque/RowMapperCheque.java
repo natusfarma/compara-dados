@@ -32,6 +32,7 @@ public class RowMapperCheque {
             modeloCheque.setCodCliente(rs.getInt("CODCLIENTE"));
             modeloCheque.setNome(rs.getString("NOME"));
             modeloCheque.setCgcCpf(rs.getString("CGC_CPF").trim());
+            modeloCheque.setStatus(rs.getString("STS_CH"));
         }catch (SQLException e){
             throw new ConversaoNaoEncontradaException(e.getMessage(), e.getCause());
         }

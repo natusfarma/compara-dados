@@ -11,7 +11,11 @@ SELECT
 		CH.AG_CHQ					  			AS AGENCIA,
 		ISNULL(CLI.CD_CLI,0)  			AS CODCLIENTE,
 		CH.NM_EMI                   			AS NOME,
-		CH.CPF_CGC_EMI        				AS CGC_CPF
+		CH.CPF_CGC_EMI        				AS CGC_CPF,
+		CASE 
+			WHEN V.ST_VD = 1 THEN 'CANCELADO'
+			ELSE 'ATIVO'
+		END								AS STS_CH
 		
 FROM 
 	PDV_VD_CHQS CH

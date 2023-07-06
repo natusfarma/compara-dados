@@ -12,6 +12,7 @@ public class ModeloNotaFiscal {
     private int codCliente;
     private String status;
     private String filialTotvs;
+    private double valor;
 
     public int getFilial() {
         return filial;
@@ -77,6 +78,14 @@ public class ModeloNotaFiscal {
         this.filialTotvs = filialTotvs;
     }
 
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -109,6 +118,7 @@ public class ModeloNotaFiscal {
                 ";" + codCliente +
                 ";" + status +
                 ";" + filialTotvs +
+                ";" + valor +
                 ";" ;
     }
 
